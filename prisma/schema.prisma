@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model YearlyEmissions {
+  id              String       @id @default(uuid())
+  year            String
+  emissions_janeiro Decimal @default(0)
+  emissions_fevereiro Decimal @default(0)
+  emissions_marco Decimal @default(0)
+  emissions_abril Decimal @default(0)
+  emissions_maio Decimal @default(0)
+  emissions_junho Decimal @default(0)
+  emissions_julho Decimal @default(0)
+  emissions_agosto Decimal @default(0)
+  emissions_setembro Decimal @default(0)
+  emissions_outubro Decimal @default(0)
+  emissions_novembro Decimal @default(0)
+  emissions_dezembro Decimal @default(0)
+  removals_janeiro Decimal @default(0)
+  removals_fevereiro Decimal @default(0)
+  removals_marco Decimal @default(0)
+  removals_abril Decimal @default(0)
+  removals_maio Decimal @default(0)
+  removals_junho Decimal @default(0)
+  removals_julho Decimal @default(0)
+  removals_agosto Decimal @default(0)
+  removals_setembro Decimal @default(0)
+  removals_outubro Decimal @default(0)
+  removals_novembro Decimal @default(0)
+  removals_dezembro Decimal @default(0)
+}
+
+model DadosHistorico {
+  id Int @id @default(autoincrement())
+  ano Int
+  valor Float
+  escopos String
+  empresa String
+}
+
+
+model SubActivity {
+  id        Int      @id @default(autoincrement())
+  name      String
+  status    String @default("initialized")
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+}
+
+model Project {
+  id          Int           @id @default(autoincrement())
+  projectName String
+  activity    String
+  start       DateTime
+  end         DateTime
+  status      String @default("initialized")
+  percentage  Int @default(0)
+  developer   String
+  role        String @default("developer")
+  subActivities SubActivity[]
+}
