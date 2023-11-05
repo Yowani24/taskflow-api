@@ -22,7 +22,10 @@ export class SubactivityService {
   }
 
   update(id: number, updateSubactivityDto: UpdateSubactivityDto) {
-    return `This action updates a #${id} subactivity`;
+    return this.prismaService.subActivity.update({
+      where: { id },
+      data: updateSubactivityDto,
+    });
   }
 
   remove(id: number) {
